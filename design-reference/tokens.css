@@ -1,0 +1,390 @@
+/* ============================================================
+   dms. — Foundation tokens
+   Colors + typography
+   ------------------------------------------------------------
+   Palette is LOCKED. Do not introduce new hues.
+   Lime is the only accent. No gradients, no glows, no secondary brand color.
+   ============================================================ */
+
+/* -------- Fonts -------------------------------------------- */
+
+@font-face {
+  font-family: "Instrument Serif";
+  src: url("fonts/InstrumentSerif-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Manrope";
+  src: url("fonts/Manrope-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Manrope";
+  src: url("fonts/Manrope-SemiBold.ttf") format("truetype");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Manrope";
+  src: url("fonts/Manrope-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Manrope";
+  src: url("fonts/Manrope-ExtraBold.ttf") format("truetype");
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("fonts/JetBrainsMono-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("fonts/JetBrainsMono-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Inter was removed — the system is Manrope (UI + body), Instrument Serif
+   (display only), JetBrains Mono (operational). Manrope-Regular (400) was
+   not in the upload, so load the full Manrope weight set from Google Fonts
+   alongside the self-hosted heavier weights. */
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap");
+
+
+:root {
+  /* -------- Color (raw) ----------------------------------- */
+  --bg:               #0a0a0a;        /* warm black, not pure */
+  --bg-elevated:      #111111;        /* one step lighter — modals, popovers */
+  --accent:           #c8ff00;        /* electric lime — used SPARINGLY */
+  --accent-ink:       #0a0a0a;        /* text on lime fills */
+  --fg:               #f0f0f0;        /* primary text */
+  --fg-muted:         rgba(240, 240, 240, 0.45);
+  --fg-faint:         rgba(240, 240, 240, 0.25);
+
+  --surface:          rgba(255, 255, 255, 0.04);
+  --surface-hover:    rgba(255, 255, 255, 0.06);
+  --surface-pressed:  rgba(255, 255, 255, 0.03);
+
+  --border:           rgba(200, 255, 0, 0.15);   /* lime, very transparent */
+  --border-strong:    rgba(200, 255, 0, 0.35);
+  --border-neutral:   rgba(240, 240, 240, 0.08);
+  --hairline:         rgba(240, 240, 240, 0.06);
+
+  --focus-ring:       rgba(200, 255, 0, 0.55);
+
+  /* Status (kept grayscale; lime can promote one element if needed) */
+  --status-success:   #c8ff00;   /* yes — lime doubles as success */
+  --status-warn:      #f0f0f0;   /* uses weight/case, not hue */
+  --status-danger:    #ff5a5a;   /* only for destructive confirmations */
+
+  /* -------- Color (semantic) ------------------------------- */
+  --color-bg:                 var(--bg);
+  --color-bg-elevated:        var(--bg-elevated);
+  --color-fg:                 var(--fg);
+  --color-fg-muted:           var(--fg-muted);
+  --color-fg-faint:           var(--fg-faint);
+  --color-accent:             var(--accent);
+  --color-surface:            var(--surface);
+  --color-border:             var(--border);
+  --color-border-neutral:     var(--border-neutral);
+
+  /* -------- Type families --------------------------------- */
+  --font-display:  "Instrument Serif", "Times New Roman", Georgia, serif;
+  --font-ui:       "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-mono:     "JetBrains Mono", "Geist Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-body:     "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+  /* -------- Type scale (display / serif) ------------------ */
+  --display-1-size:   clamp(64px, 9vw, 144px);  --display-1-leading: 0.92;  --display-1-tracking: -0.03em;
+  --display-2-size:   clamp(48px, 6.5vw, 96px); --display-2-leading: 0.96;  --display-2-tracking: -0.025em;
+  --display-3-size:   clamp(36px, 4.5vw, 64px); --display-3-leading: 1.0;   --display-3-tracking: -0.02em;
+
+  /* -------- Type scale (UI / Manrope) --------------------- */
+  --h1-size: 40px; --h1-leading: 1.08; --h1-tracking: -0.02em; --h1-weight: 700;
+  --h2-size: 28px; --h2-leading: 1.12; --h2-tracking: -0.015em; --h2-weight: 700;
+  --h3-size: 20px; --h3-leading: 1.2;  --h3-tracking: -0.01em;  --h3-weight: 600;
+  --label-size: 14px; --label-leading: 1.2; --label-tracking: 0; --label-weight: 600;
+  --button-size: 14px; --button-leading: 1; --button-tracking: 0; --button-weight: 600;
+  --nav-size: 14px; --nav-leading: 1; --nav-tracking: 0; --nav-weight: 500;
+
+  /* -------- Type scale (body / Inter) --------------------- */
+  --body-lg-size: 18px; --body-lg-leading: 1.5;
+  --body-size:    16px; --body-leading:    1.55;
+  --body-sm-size: 14px; --body-sm-leading: 1.5;
+
+  /* -------- Operational text (mono) ----------------------- */
+  --mono-size: 12px;
+  --mono-leading: 1.35;
+  --mono-tracking: 0.04em;       /* slight track for caps eyebrows */
+  --eyebrow-size: 11px;          /* uppercase pill / section label */
+  --eyebrow-tracking: 0.12em;
+
+  /* -------- Spacing scale (4px base) ---------------------- */
+  --space-0:   0;
+  --space-1:   4px;
+  --space-2:   8px;
+  --space-3:   12px;
+  --space-4:   16px;
+  --space-5:   24px;
+  --space-6:   32px;
+  --space-7:   48px;
+  --space-8:   64px;
+  --space-9:   96px;
+  --space-10: 128px;
+
+  /* -------- Radii — SHARP ---------------------------------- */
+  --radius-0:    0;
+  --radius-xs:   2px;
+  --radius-sm:   4px;
+  --radius-md:   6px;
+  --radius-lg:   8px;     /* HARD CAP for cards/panels */
+  --radius-pill: 999px;   /* nav + CTAs only */
+
+  /* -------- Borders --------------------------------------- */
+  --border-w:        1px;
+  --border-w-strong: 1.5px;
+
+  /* -------- Motion ---------------------------------------- */
+  --ease-out-strong: cubic-bezier(0.23, 1, 0.32, 1);   /* Emil Kowalski */
+  --ease-in-out:     cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast:   140ms;
+  --dur-base:   220ms;
+  --dur-slow:   420ms;
+  --stagger:    60ms;     /* 50–70ms band */
+
+  /* -------- Dot grid (background pattern) ----------------- */
+  --dot-color:  rgba(240, 240, 240, 0.05);  /* 0.04–0.06 band */
+  --dot-size:   1px;
+  --dot-gap:    24px;
+
+  /* -------- Layout ---------------------------------------- */
+  --container-max: 1240px;
+  --container-pad: clamp(20px, 4vw, 48px);
+}
+
+
+/* ============================================================
+   Base
+   ============================================================ */
+html, body {
+  background: var(--color-bg);
+  color: var(--color-fg);
+  font-family: var(--font-body);
+  font-size: var(--body-size);
+  line-height: var(--body-leading);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection { background: var(--accent); color: var(--accent-ink); }
+
+
+/* ============================================================
+   Type primitives — apply by class so HTML stays semantic
+   ============================================================ */
+
+.display-1, .display-2, .display-3 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  color: var(--fg);
+  text-wrap: balance;
+}
+.display-1 { font-size: var(--display-1-size); line-height: var(--display-1-leading); letter-spacing: var(--display-1-tracking); }
+.display-2 { font-size: var(--display-2-size); line-height: var(--display-2-leading); letter-spacing: var(--display-2-tracking); }
+.display-3 { font-size: var(--display-3-size); line-height: var(--display-3-leading); letter-spacing: var(--display-3-tracking); }
+
+/* Emphasis inside display copy — lime color on accent words. NEVER italic. */
+.display-1 em, .display-2 em, .display-3 em {
+  font-style: normal;
+  font-weight: 400;
+  color: var(--accent);
+}
+
+.h1, .h2, .h3 { font-family: var(--font-ui); color: var(--fg); }
+.h1 { font-size: var(--h1-size); line-height: var(--h1-leading); letter-spacing: var(--h1-tracking); font-weight: var(--h1-weight); }
+.h2 { font-size: var(--h2-size); line-height: var(--h2-leading); letter-spacing: var(--h2-tracking); font-weight: var(--h2-weight); }
+.h3 { font-size: var(--h3-size); line-height: var(--h3-leading); letter-spacing: var(--h3-tracking); font-weight: var(--h3-weight); }
+
+.p-lg, .p, .p-sm { font-family: var(--font-body); color: var(--fg); }
+.p-lg { font-size: var(--body-lg-size); line-height: var(--body-lg-leading); }
+.p    { font-size: var(--body-size);    line-height: var(--body-leading);    }
+.p-sm { font-size: var(--body-sm-size); line-height: var(--body-sm-leading); }
+
+.muted { color: var(--fg-muted); }
+.faint { color: var(--fg-faint); }
+
+.label {
+  font-family: var(--font-ui);
+  font-size: var(--label-size);
+  line-height: var(--label-leading);
+  letter-spacing: var(--label-tracking);
+  font-weight: var(--label-weight);
+  color: var(--fg);
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--eyebrow-size);
+  letter-spacing: var(--eyebrow-tracking);
+  text-transform: uppercase;
+  color: var(--fg-muted);
+  font-weight: 500;
+}
+
+.mono {
+  font-family: var(--font-mono);
+  font-size: var(--mono-size);
+  line-height: var(--mono-leading);
+  letter-spacing: var(--mono-tracking);
+  color: var(--fg);
+}
+
+/* Wordmark — locked composition */
+.wordmark {
+  font-family: var(--font-ui);
+  font-weight: 800;
+  letter-spacing: -0.045em;
+  text-transform: lowercase;
+  color: var(--fg);
+  line-height: 1;
+  font-size: 28px;
+}
+.wordmark .dot { color: var(--accent); }
+
+
+/* ============================================================
+   Surfaces, cards, dot grid
+   ============================================================ */
+
+.dot-grid {
+  background-image: radial-gradient(circle, var(--dot-color) var(--dot-size), transparent var(--dot-size));
+  background-size: var(--dot-gap) var(--dot-gap);
+  background-position: 0 0;
+}
+
+.card {
+  background: var(--surface);
+  border: var(--border-w) solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  transition: background var(--dur-base) var(--ease-out-strong),
+              border-color var(--dur-base) var(--ease-out-strong);
+}
+.card:hover { background: var(--surface-hover); border-color: var(--border-strong); }
+
+
+/* ============================================================
+   Buttons
+   ============================================================ */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  font-family: var(--font-ui);
+  font-weight: var(--button-weight);
+  font-size: var(--button-size);
+  letter-spacing: var(--button-tracking);
+  height: 44px;
+  padding: 0 22px;
+  border-radius: var(--radius-pill);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: transform var(--dur-fast) var(--ease-out-strong),
+              background var(--dur-base) var(--ease-out-strong),
+              color var(--dur-base) var(--ease-out-strong),
+              border-color var(--dur-base) var(--ease-out-strong);
+  user-select: none;
+}
+.btn:active { transform: translateY(1px); }
+
+.btn--primary { background: var(--accent); color: var(--accent-ink); }
+.btn--primary:hover { background: #d8ff3a; }
+
+.btn--ghost { background: transparent; color: var(--fg); border-color: var(--border); }
+.btn--ghost:hover { border-color: var(--border-strong); background: var(--surface); }
+
+.btn--link {
+  background: transparent;
+  color: var(--fg);
+  height: auto;
+  padding: 0;
+  border-radius: 0;
+}
+.btn--link:hover { color: var(--accent); }
+
+
+/* ============================================================
+   Form bits
+   ============================================================ */
+
+.input {
+  font-family: var(--font-ui);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--fg);
+  background: var(--surface);
+  border: 1px solid var(--border-neutral);
+  border-radius: var(--radius-sm);
+  height: 44px;
+  padding: 0 14px;
+  transition: border-color var(--dur-base) var(--ease-out-strong),
+              background var(--dur-base) var(--ease-out-strong);
+}
+.input::placeholder { color: var(--fg-faint); }
+.input:hover { border-color: var(--border); }
+.input:focus { outline: none; border-color: var(--border-strong); background: var(--surface-hover); }
+
+
+/* ============================================================
+   Pills / chips
+   ============================================================ */
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  height: 28px;
+  padding: 0 12px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--fg);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.pill .dot { width: 6px; height: 6px; border-radius: 999px; background: var(--accent); }
+
+
+/* ============================================================
+   Utility
+   ============================================================ */
+
+.accent { color: var(--accent); }
+.serif  { font-family: var(--font-display); }
+
+/* Focus ring — keyboard only */
+:where(button, a, input, [tabindex]):focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
