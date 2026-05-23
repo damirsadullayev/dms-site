@@ -2,8 +2,10 @@
 
 import { useEffect, useState } from "react";
 import { ArrowRight } from "lucide-react";
+import { Turnstile } from "@marsidev/react-turnstile";
 import { Icon } from "./Icon";
 import { Reveal, Tilt } from "@/lib/motion-kit";
+import { supabase } from "@/lib/supabase";
 
 interface FieldProps {
   id: string;
@@ -82,19 +84,47 @@ export const Contact = () => {
   const [email, setEmail] = useState("");
   const [budget, setBudget] = useState("");
   const [message, setMessage] = useState("");
-  const [sent, setSent] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [turnstileToken, setTurnstileToken] = useState("");
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!email.trim() || !message.trim()) return;
-    setSent(true);
-    setTimeout(() => {
-      setSent(false);
-      setName("");
-      setEmail("");
-      setBudget("");
-      setMessage("");
-    }, 5200);
+    if (!email.trim() || !message.trim() || submitting) return;
+
+    if (!turnstileToken) {
+      setError("Please complete the security check.");
+      return;
+    }
+
+    setSubmitting(true);
+    setError(null);
+
+    const { error: insertError } = await supabase.from("leads").insert({
+      name,
+      email,
+      type: kind,
+      message,
+      turnstile_token: turnstileToken,
+      created_at: new Date().toISOString(),
+    });
+
+    setSubmitting(false);
+
+    if (insertError) {
+      setError("Could not send. Try again or email directly.");
+      return;
+    }
+
+    setSubmitted(true);
+    setName("");
+    setEmail("");
+    setBudget("");
+    setMessage("");
+    setTurnstileToken("");
+
+    setTimeout(() => setSubmitted(false), 5200);
   };
 
   return (
@@ -237,21 +267,38 @@ export const Contact = () => {
                 onChange={setMessage}
                 required
               />
+              <Turnstile
+                siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY!}
+                onSuccess={(token) => setTurnstileToken(token)}
+                onExpire={() => setTurnstileToken("")}
+                onError={() => setTurnstileToken("")}
+                options={{ theme: "dark" }}
+              />
               <div className="form__send">
-                <span>Sent to damir@dms.[domain]</span>
+                <span>Sent to damir@dmsgroup.space</span>
                 <button
                   type="submit"
-                  className="relative inline-flex items-center gap-2 h-12 px-6 rounded-full font-semibold text-sm text-[#0a0a0a] bg-[#c8ff00] border-2 border-[#0a0a0a] shadow-[0_4px_0_0_#0a0a0a] cursor-pointer transition-all duration-150 hover:-translate-y-0.5 hover:shadow-[0_5px_0_0_#0a0a0a] active:translate-y-0.5 active:shadow-none"
+                  disabled={submitting}
+                  className="relative inline-flex items-center gap-2 h-12 px-6 rounded-full font-semibold text-sm text-[#0a0a0a] bg-[#c8ff00] border-2 border-[#0a0a0a] shadow-[0_4px_0_0_#0a0a0a] cursor-pointer transition-all duration-150 hover:-translate-y-0.5 hover:shadow-[0_5px_0_0_#0a0a0a] active:translate-y-0.5 active:shadow-none disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:translate-y-0 disabled:hover:shadow-[0_4px_0_0_#0a0a0a]"
                   style={{ fontFamily: 'var(--font-ui)' }}
                 >
-                  Send message
+                  {submitting ? "Sending…" : "Send message"}
                   <ArrowRight size={16} strokeWidth={2} />
                 </button>
               </div>
             </form>
-            <div className={`confirm ${sent ? "in" : ""}`}>
-              <Icon name="check" size={14} /> Logged. Reply within 24h,
-              weekdays.
+            <div
+              className={`confirm ${submitted ? "in" : ""}`}
+              style={{ color: "#c8ff00" }}
+            >
+              <Icon name="check" size={14} /> Message sent.
+            </div>
+            <div
+              className={`confirm ${error ? "in" : ""}`}
+              style={{ color: "#ff4d4d" }}
+              role="alert"
+            >
+              {error}
             </div>
           </Tilt>
         </Reveal>
@@ -336,7 +383,7 @@ export const Contact = () => {
             >
               <Icon name="mail" size={14} />
               Or write directly —{" "}
-              <span style={{ color: "var(--fg)" }}>damir@dms.[domain]</span>
+              <span style={{ color: "var(--fg)" }}>damir@dmsgroup.space</span>
             </div>
           </div>
         </Reveal>

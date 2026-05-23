@@ -8,6 +8,11 @@
 @import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap");
 @import "tailwindcss";
 
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 /* ============================================================
    dms. — Foundation tokens
    Colors + typography
@@ -449,6 +454,8 @@ section + section { border-top: 1px solid var(--border-neutral); }
   transform: translate3d(0, 14px, 0);
   transition: opacity 520ms var(--ease-out-strong), transform 520ms var(--ease-out-strong);
   will-change: transform, opacity;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 .fm.fm-in { opacity: 1; transform: none; }
 
@@ -564,6 +571,8 @@ section + section { border-top: 1px solid var(--border-neutral); }
   transition: border-color 360ms var(--ease-out-strong), background 360ms var(--ease-out-strong), opacity 520ms var(--ease-out-strong);
   position: relative;
   opacity: 0.55;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 .svc-card.is-active {
   opacity: 1;
@@ -638,6 +647,8 @@ section + section { border-top: 1px solid var(--border-neutral); }
   transition: transform 420ms var(--ease-out-strong), border-color 360ms var(--ease-out-strong), background 360ms var(--ease-out-strong);
   will-change: transform;
   overflow: hidden;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 .tilt-card:hover { border-color: var(--border-strong); background: var(--surface-hover); }
 .tilt-card__glow {
@@ -1004,7 +1015,13 @@ section + section { border-top: 1px solid var(--border-neutral); }
 .who-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-items: stretch; }
 .who-grid > .fm { height: 100%; }
 .who-grid > .fm > .who-card { height: 100%; }
-.who-card { min-height: 420px; display: flex; flex-direction: column; }
+.who-card {
+  min-height: 420px;
+  display: flex;
+  flex-direction: column;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
 .who-card .head { display: flex; align-items: center; justify-content: space-between; }
 .who-card .tag {
   font-family: var(--font-mono); font-size: 11px;

@@ -151,7 +151,7 @@ export const Nav = ({ active, onNavigate }: NavProps) => {
           <button className="nav-overlay__cta" onClick={() => go("contact")}>
             Start a project <Icon name="arrow-right" size={16} />
           </button>
-          <div className="nav-overlay__email">damir@dms.[domain]</div>
+          <div className="nav-overlay__email">damir@dmsgroup.space</div>
         </div>
       </div>
     </>

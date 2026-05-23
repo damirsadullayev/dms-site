@@ -1,13 +1,13 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { useSmoothScroll } from "@/lib/smooth-scroll";
+// import { useSmoothScroll } from "@/lib/smooth-scroll";
 
 interface SmoothScrollProviderProps {
   children: ReactNode;
 }
 
 export default function SmoothScrollProvider({ children }: SmoothScrollProviderProps) {
-  useSmoothScroll();
+  // useSmoothScroll(); // temporarily disabled — investigating animation lag
   return <>{children}</>;
 }
