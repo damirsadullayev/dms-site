@@ -5,7 +5,11 @@ import { ArrowRight } from "lucide-react";
 import { Icon } from "./Icon";
 import { Reveal } from "@/lib/motion-kit";
 
-export const Approach = () => {
+interface ApproachProps {
+  onCta: (id: string) => void;
+}
+
+export const Approach = ({ onCta }: ApproachProps) => {
   const cardRef = useRef<HTMLDivElement>(null);
 
   // Init pulse (per fix spec).
@@ -63,12 +67,7 @@ export const Approach = () => {
           </Reveal>
           <Reveal variant="up" delay={260}>
             <button
-              onClick={() =>
-                window.open(
-                  "mailto:damir@dmsgroup.space?subject=Book a call with DMS",
-                  "_blank"
-                )
-              }
+              onClick={() => onCta("contact")}
               style={{ alignSelf: "flex-start", marginTop: 8 }}
               className="relative inline-flex items-center gap-2 h-12 px-6 rounded-full font-semibold text-sm text-[#0a0a0a] bg-[#c8ff00] border-2 border-[#0a0a0a] shadow-[0_4px_0_0_#0a0a0a] cursor-pointer transition-all duration-150 hover:-translate-y-0.5 hover:shadow-[0_5px_0_0_#0a0a0a] active:translate-y-0.5 active:shadow-none"
             >

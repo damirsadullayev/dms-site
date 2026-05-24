@@ -62,11 +62,11 @@ export default function Home() {
       <Nav active={active} onNavigate={onNavigate} />
       <main>
         <Hero onCta={onNavigate} />
-        <WhoFor />
+        <WhoFor onCta={onNavigate} />
         <Marquee />
         <Services />
         <WhyDms />
-        <Approach />
+        <Approach onCta={onNavigate} />
         <Contact />
       </main>
       <Footer />

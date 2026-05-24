@@ -12,9 +12,10 @@ interface WhoCardProps {
   body: ReactNode;
   cta: string;
   accent?: boolean;
+  onCtaClick?: () => void;
 }
 
-const WhoCard = ({ tag, side, title, body, cta, accent }: WhoCardProps) => {
+const WhoCard = ({ tag, side, title, body, cta, accent, onCtaClick }: WhoCardProps) => {
   const cardRef = useRef<HTMLDivElement>(null);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -48,20 +49,26 @@ const WhoCard = ({ tag, side, title, body, cta, accent }: WhoCardProps) => {
       </div>
       <h3 className="title">{title}</h3>
       <p className="body">{body}</p>
-      <button className="link" style={{ marginTop: 28 }}>
+      <button onClick={onCtaClick} className="link" style={{ marginTop: 28 }}>
         {cta} <Icon name="arrow-right" size={14} />
       </button>
     </div>
   );
 };
 
-export const WhoFor = () => {
+interface WhoForProps {
+  onCta: (id: string) => void;
+}
+
+export const WhoFor = ({ onCta }: WhoForProps) => {
   // Init pulse (per fix spec).
   useEffect(() => {
     if (typeof window === "undefined") return;
     const timer = setTimeout(() => {}, 50);
     return () => clearTimeout(timer);
   }, []);
+
+  const goToContact = () => onCta("contact");
 
   return (
     <section id="brands" data-screen-label="01 Who" className="container">
@@ -103,6 +110,7 @@ export const WhoFor = () => {
             title="You ship gear. dms. ships the deal."
             body="You make monitors, peripherals, PC parts, or gaming software. You want creators whose audience actually buys what you sell — not just whoever has the biggest follower count. dms. sources the shortlist, runs the outreach, negotiates the terms, and manages delivery. You see one inbox and one invoice."
             cta="Brief a project"
+            onCtaClick={goToContact}
           />
         </Reveal>
         <Reveal variant="up" delay={140}>
@@ -112,6 +120,7 @@ export const WhoFor = () => {
             title="Only the deals worth reading."
             body="You make tech or gaming content. You're tired of one‑line pitches from agencies that have clearly never watched your channel. dms. only brings you deals where the brand is right, the rate is fair, and the brief respects your audience. Commission‑based — dms. gets paid when you do."
             cta="Get on the roster"
+            onCtaClick={goToContact}
           />
         </Reveal>
       </div>
