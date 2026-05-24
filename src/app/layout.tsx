@@ -3,7 +3,7 @@ import "./globals.css";
 import SmoothScrollProvider from "@/components/SmoothScrollProvider";
 
 export const metadata: Metadata = {
-  title: "dms. — gaming & tech hardware influencer marketing",
+  title: "dms. — gaming & tech influencer marketing",
   description: "Influencer marketing built only for gaming and tech hardware. One operator running every deal from first email to final invoice.",
 };
 
