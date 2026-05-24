@@ -1,10 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ArrowRight } from "lucide-react";
 import { Turnstile } from "@marsidev/react-turnstile";
 import { Icon } from "./Icon";
-import { Reveal, Tilt } from "@/lib/motion-kit";
+import { Reveal } from "@/lib/motion-kit";
 import { supabase } from "@/lib/supabase";
 
 interface FieldProps {
@@ -71,13 +71,98 @@ const KIND_OPTIONS: KindOption[] = [
   { id: "question", label: "Just a question" },
 ];
 
+interface ContactInfoCardProps {
+  tag: string;
+  title: string;
+  body: string;
+}
+
+const ContactInfoCard = ({ tag, title, body }: ContactInfoCardProps) => {
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const el = cardRef.current;
+    if (!el) return;
+    const r = el.getBoundingClientRect();
+    const px = ((e.clientX - r.left) / r.width) * 100;
+    const py = ((e.clientY - r.top) / r.height) * 100;
+    el.style.setProperty("--mx", `${px}%`);
+    el.style.setProperty("--my", `${py}%`);
+  };
+
+  const handleMouseLeave = () => {
+    const el = cardRef.current;
+    if (!el) return;
+    el.style.setProperty("--mx", "50%");
+    el.style.setProperty("--my", "50%");
+  };
+
+  return (
+    <div
+      ref={cardRef}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      className="tilt-card contact-card"
+      style={{ padding: 28, flex: "1 1 0", minHeight: 0 }}
+    >
+      <div className="tilt-card__glow" aria-hidden="true" />
+      <span className="tag" style={{ color: "var(--fg-muted)" }}>
+        {tag}
+      </span>
+      <h4
+        style={{
+          fontFamily: "var(--font-display)",
+          fontWeight: 400,
+          fontSize: 24,
+          lineHeight: 1.15,
+          letterSpacing: "-0.02em",
+          color: "var(--fg)",
+          margin: "14px 0 10px",
+        }}
+      >
+        {title}
+      </h4>
+      <p
+        style={{
+          fontFamily: "var(--font-ui)",
+          fontSize: 14,
+          lineHeight: 1.55,
+          color: "var(--fg-muted)",
+          margin: 0,
+        }}
+      >
+        {body}
+      </p>
+    </div>
+  );
+};
+
 export const Contact = () => {
+  const formCardRef = useRef<HTMLDivElement>(null);
+
   // Init pulse (per fix spec).
   useEffect(() => {
     if (typeof window === "undefined") return;
     const timer = setTimeout(() => {}, 50);
     return () => clearTimeout(timer);
   }, []);
+
+  const handleFormCardMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const el = formCardRef.current;
+    if (!el) return;
+    const r = el.getBoundingClientRect();
+    const px = ((e.clientX - r.left) / r.width) * 100;
+    const py = ((e.clientY - r.top) / r.height) * 100;
+    el.style.setProperty("--mx", `${px}%`);
+    el.style.setProperty("--my", `${py}%`);
+  };
+
+  const handleFormCardMouseLeave = () => {
+    const el = formCardRef.current;
+    if (!el) return;
+    el.style.setProperty("--mx", "50%");
+    el.style.setProperty("--my", "50%");
+  };
 
   const [kind, setKind] = useState("brand");
   const [name, setName] = useState("");
@@ -175,11 +260,14 @@ export const Contact = () => {
 
       <div className="contact-grid">
         <Reveal variant="up" delay={60} style={{ height: "100%" }}>
-          <Tilt
-            max={2.5}
-            className="contact-card"
+          <div
+            ref={formCardRef}
+            onMouseMove={handleFormCardMouseMove}
+            onMouseLeave={handleFormCardMouseLeave}
+            className="tilt-card contact-card"
             style={{ padding: 32, height: "100%" }}
           >
+            <div className="tilt-card__glow" aria-hidden="true" />
             <span className="tag" style={{ color: "var(--fg-muted)" }}>
               Send a note
             </span>
@@ -300,7 +388,7 @@ export const Contact = () => {
             >
               {error}
             </div>
-          </Tilt>
+          </div>
         </Reveal>
 
         <Reveal variant="up" delay={140} style={{ height: "100%" }}>
@@ -329,40 +417,12 @@ export const Contact = () => {
                 body: "Every email gets read. No deck required, no sales call before there's anything to discuss.",
               },
             ].map((c, i) => (
-              <Tilt
+              <ContactInfoCard
                 key={i}
-                max={3}
-                className="contact-card"
-                style={{ padding: 28, flex: "1 1 0", minHeight: 0 }}
-              >
-                <span className="tag" style={{ color: "var(--fg-muted)" }}>
-                  {c.tag}
-                </span>
-                <h4
-                  style={{
-                    fontFamily: "var(--font-display)",
-                    fontWeight: 400,
-                    fontSize: 24,
-                    lineHeight: 1.15,
-                    letterSpacing: "-0.02em",
-                    color: "var(--fg)",
-                    margin: "14px 0 10px",
-                  }}
-                >
-                  {c.title}
-                </h4>
-                <p
-                  style={{
-                    fontFamily: "var(--font-ui)",
-                    fontSize: 14,
-                    lineHeight: 1.55,
-                    color: "var(--fg-muted)",
-                    margin: 0,
-                  }}
-                >
-                  {c.body}
-                </p>
-              </Tilt>
+                tag={c.tag}
+                title={c.title}
+                body={c.body}
+              />
             ))}
             <div
               style={{

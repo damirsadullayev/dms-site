@@ -1,17 +1,36 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { ArrowRight } from "lucide-react";
 import { Icon } from "./Icon";
-import { Reveal, Tilt } from "@/lib/motion-kit";
+import { Reveal } from "@/lib/motion-kit";
 
 export const Approach = () => {
+  const cardRef = useRef<HTMLDivElement>(null);
+
   // Init pulse (per fix spec).
   useEffect(() => {
     if (typeof window === "undefined") return;
     const timer = setTimeout(() => {}, 50);
     return () => clearTimeout(timer);
   }, []);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const el = cardRef.current;
+    if (!el) return;
+    const r = el.getBoundingClientRect();
+    const px = ((e.clientX - r.left) / r.width) * 100;
+    const py = ((e.clientY - r.top) / r.height) * 100;
+    el.style.setProperty("--mx", `${px}%`);
+    el.style.setProperty("--my", `${py}%`);
+  };
+
+  const handleMouseLeave = () => {
+    const el = cardRef.current;
+    if (!el) return;
+    el.style.setProperty("--mx", "50%");
+    el.style.setProperty("--my", "50%");
+  };
 
   return (
     <section id="approach" data-screen-label="05 Approach" className="container">
@@ -60,7 +79,13 @@ export const Approach = () => {
         </div>
 
         <Reveal variant="up" delay={180}>
-          <Tilt max={5} className="contact-card appr__card">
+          <div
+            ref={cardRef}
+            onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
+            className="tilt-card contact-card appr__card"
+          >
+            <div className="tilt-card__glow" aria-hidden="true" />
             <span className="tag">
               <Icon name="spark" size={12} /> What you get on the call
             </span>
@@ -96,7 +121,7 @@ export const Approach = () => {
               <span>No deck. No upsell.</span>
               <span style={{ color: "var(--accent)" }}>Free</span>
             </div>
-          </Tilt>
+          </div>
         </Reveal>
       </div>
     </section>

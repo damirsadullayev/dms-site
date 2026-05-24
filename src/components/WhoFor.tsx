@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import type { ReactNode } from "react";
 import { Icon } from "./Icon";
-import { Reveal, Tilt } from "@/lib/motion-kit";
+import { Reveal } from "@/lib/motion-kit";
 
 interface WhoCardProps {
   tag: string;
@@ -14,19 +14,46 @@ interface WhoCardProps {
   accent?: boolean;
 }
 
-const WhoCard = ({ tag, side, title, body, cta, accent }: WhoCardProps) => (
-  <Tilt max={4} className="who-card">
-    <div className="head">
-      <span className="tag">{tag}</span>
-      <span className={`tag ${accent ? "lime" : ""}`}>{side}</span>
+const WhoCard = ({ tag, side, title, body, cta, accent }: WhoCardProps) => {
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const el = cardRef.current;
+    if (!el) return;
+    const r = el.getBoundingClientRect();
+    const px = ((e.clientX - r.left) / r.width) * 100;
+    const py = ((e.clientY - r.top) / r.height) * 100;
+    el.style.setProperty("--mx", `${px}%`);
+    el.style.setProperty("--my", `${py}%`);
+  };
+
+  const handleMouseLeave = () => {
+    const el = cardRef.current;
+    if (!el) return;
+    el.style.setProperty("--mx", "50%");
+    el.style.setProperty("--my", "50%");
+  };
+
+  return (
+    <div
+      ref={cardRef}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      className="tilt-card who-card"
+    >
+      <div className="tilt-card__glow" aria-hidden="true" />
+      <div className="head">
+        <span className="tag">{tag}</span>
+        <span className={`tag ${accent ? "lime" : ""}`}>{side}</span>
+      </div>
+      <h3 className="title">{title}</h3>
+      <p className="body">{body}</p>
+      <button className="link" style={{ marginTop: 28 }}>
+        {cta} <Icon name="arrow-right" size={14} />
+      </button>
     </div>
-    <h3 className="title">{title}</h3>
-    <p className="body">{body}</p>
-    <button className="link" style={{ marginTop: 28 }}>
-      {cta} <Icon name="arrow-right" size={14} />
-    </button>
-  </Tilt>
-);
+  );
+};
 
 export const WhoFor = () => {
   // Init pulse (per fix spec).
