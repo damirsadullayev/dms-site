@@ -48,7 +48,7 @@ export const Hero = ({ onCta }: HeroProps) => {
       <Reveal variant="up" delay={0}>
         <span className="hero__eyebrow">
           <span className="d" aria-hidden="true" />
-          Gaming & tech hardware partnerships
+          Gaming & tech partnerships
         </span>
       </Reveal>
 
@@ -84,7 +84,7 @@ export const Hero = ({ onCta }: HeroProps) => {
           maxWidth: 560,
         }}
       >
-        Influencer marketing built only for gaming and tech hardware. One
+        Influencer marketing built only for gaming and tech. One
         operator running every deal from first email to final invoice.
       </p>
 

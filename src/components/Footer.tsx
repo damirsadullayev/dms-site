@@ -86,7 +86,7 @@ export const Footer = () => {
               marginBottom: 6,
             }}
           >
-            Influencer marketing for gaming and tech hardware.
+            Influencer marketing for gaming and tech.
           </div>
           <div className="line muted">
             One operator. Every deal. Start to finish.
@@ -140,7 +140,7 @@ export const Footer = () => {
 
       <div className="footer__bottom">
         <span>© dms. {new Date().getFullYear()}</span>
-        <span>Gaming and tech hardware only.</span>
+        <span>Gaming and tech only.</span>
       </div>
     </footer>
   );

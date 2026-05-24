@@ -51,7 +51,7 @@ export const Approach = ({ onCta }: ApproachProps) => {
           </Reveal>
           <Reveal variant="up" delay={140}>
             <p className="appr__body">
-              dms. works narrow on purpose — gaming and tech hardware only. That
+              dms. works narrow on purpose — gaming and tech only. That
               focus means the first call isn&apos;t a sales pitch. It&apos;s a
               working session: send a category, a budget range, or a campaign
               you&apos;re considering, and you&apos;ll get a real take on creator

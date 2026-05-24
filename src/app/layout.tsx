@@ -4,7 +4,7 @@ import SmoothScrollProvider from "@/components/SmoothScrollProvider";
 
 export const metadata: Metadata = {
   title: "dms. — gaming & tech influencer marketing",
-  description: "Influencer marketing built only for gaming and tech hardware. One operator running every deal from first email to final invoice.",
+  description: "Influencer marketing built only for gaming and tech. One operator running every deal from first email to final invoice.",
 };
 
 export const viewport: Viewport = {
