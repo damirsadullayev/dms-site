@@ -117,9 +117,18 @@ export const Services = () => {
             {SERVICES.map((s, i) => (
               <span
                 key={s.n}
-                className={`svc-num__cell ${
-                  i === active ? "is-active" : i < active ? "is-past" : ""
-                }`}
+                className="svc-num__cell"
+                style={{
+                  opacity: i === active ? 1 : 0,
+                  transform:
+                    i === active
+                      ? "none"
+                      : i < active
+                      ? "translate3d(0, -24px, 0)"
+                      : "translate3d(0, 24px, 0)",
+                  transition:
+                    "opacity 360ms cubic-bezier(0.23, 1, 0.32, 1), transform 420ms cubic-bezier(0.23, 1, 0.32, 1)",
+                }}
               >
                 {s.n}
                 <span className="svc-num__dot">.</span>

@@ -415,14 +415,14 @@ html.lenis, html.lenis body { height: auto; }
 .lenis.lenis-stopped { overflow: hidden; }
 .lenis.lenis-smooth iframe { pointer-events: none; }
 
-html { overflow-x: hidden; }
+html { overflow-x: clip; }
 body {
   min-height: 100dvh;
   background-color: var(--bg);
   background-image: radial-gradient(circle, rgba(240,240,240,0.05) 1px, transparent 1px);
   background-size: 24px 24px;
   background-attachment: fixed;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 .container {
@@ -536,7 +536,7 @@ section + section { border-top: 1px solid var(--border-neutral); }
 .svc-left {
   position: sticky;
   top: calc(50dvh - 180px);
-  display: flex; flex-direction: column; gap: 28px;
+  display: flex; flex-direction: column; justify-content: center; gap: 28px;
   min-height: 360px;
 }
 .svc-num {
