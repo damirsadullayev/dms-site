@@ -265,7 +265,7 @@ export const Contact = () => {
             onMouseMove={handleFormCardMouseMove}
             onMouseLeave={handleFormCardMouseLeave}
             className="tilt-card contact-card"
-            style={{ padding: 32, height: "100%" }}
+            style={{ height: "100%" }}
           >
             <div className="tilt-card__glow" aria-hidden="true" />
             <span className="tag" style={{ color: "var(--fg-muted)" }}>
@@ -355,13 +355,15 @@ export const Contact = () => {
                 onChange={setMessage}
                 required
               />
-              <Turnstile
-                siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY!}
-                onSuccess={(token) => setTurnstileToken(token)}
-                onExpire={() => setTurnstileToken("")}
-                onError={() => setTurnstileToken("")}
-                options={{ theme: "dark" }}
-              />
+              <div className="turnstile-wrap">
+                <Turnstile
+                  siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY!}
+                  onSuccess={(token) => setTurnstileToken(token)}
+                  onExpire={() => setTurnstileToken("")}
+                  onError={() => setTurnstileToken("")}
+                  options={{ theme: "dark" }}
+                />
+              </div>
               <div className="form__send">
                 <span>Sent to damir@dmsgroup.space</span>
                 <button
