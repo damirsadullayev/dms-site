@@ -14,6 +14,7 @@ const NAV_ITEMS: NavItem[] = [
   { id: "brands", label: "For brands" },
   { id: "services", label: "Services" },
   { id: "why", label: "Why dms." },
+  { id: "roster", label: "Roster" },
   { id: "contact", label: "Contact" },
 ];
 

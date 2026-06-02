@@ -1051,6 +1051,18 @@ section + section { border-top: 1px solid var(--border-neutral); }
 }
 .who-card .link:hover { color: var(--accent); gap: 12px; }
 
+/* Roster */
+#roster.container {
+  padding-top: clamp(96px, 11vw, 160px);
+  padding-bottom: clamp(96px, 11vw, 160px);
+}
+.roster-card { padding: 36px; }
+.roster-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
 /* Approach */
 .appr {
   display: grid;
@@ -1267,7 +1279,8 @@ section + section { border-top: 1px solid var(--border-neutral); }
      three eyebrow-led sections so they get real headroom on mobile. */
   #why.container,
   #approach.container,
-  #contact.container {
+  #contact.container,
+  #roster.container {
     padding-top: clamp(80px, 14vw, 120px);
     padding-bottom: clamp(48px, 10vw, 80px);
   }
@@ -1277,6 +1290,13 @@ section + section { border-top: 1px solid var(--border-neutral); }
   .svc-card { min-height: 0; padding: 24px; }
   .appr__card { min-height: 0; padding: 28px; }
   .who-card { min-height: 0; }
+  .roster-card { padding: 24px; }
+  .roster-stats { grid-template-columns: 1fr 1fr; }
+  .roster-stats > :nth-child(3) {
+    grid-column: 1 / -1;
+    padding-top: 16px;
+    border-top: 1px solid var(--border-neutral);
+  }
   .who-grid { grid-template-columns: 1fr; }
   .svc-stage { grid-template-columns: 1fr; gap: 32px; }
   .svc-left { position: relative; top: auto; min-height: auto; }

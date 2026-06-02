@@ -7,6 +7,7 @@ import { WhoFor } from "@/components/WhoFor";
 import { Marquee } from "@/components/Marquee";
 import { Services } from "@/components/Services";
 import { WhyDms } from "@/components/WhyDms";
+import { Roster } from "@/components/Roster";
 import { Approach } from "@/components/Approach";
 import { Contact } from "@/components/Contact";
 import { Footer } from "@/components/Footer";
@@ -20,6 +21,7 @@ const SECTION_IDS = [
   "ticker",
   "services",
   "why",
+  "roster",
   "approach",
   "contact",
 ];
@@ -66,6 +68,7 @@ export default function Home() {
         <Marquee />
         <Services />
         <WhyDms />
+        <Roster onCta={onNavigate} />
         <Approach onCta={onNavigate} />
         <Contact />
       </main>
